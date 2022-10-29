@@ -39,20 +39,25 @@ function game() {
     computer: 0
   }
   
-  // Play game
+  // Play 5 rounds
   for (let i = 0; i < 5; i++) {
-    // Get user input
+    // Get, sanitize and validate user input
     let playerChoice = null
     while (!playerChoice) {
-      const p = prompt("Choose your weapon: rock, paper or scissors.")
-      const userInput = p && p.trim().toLowerCase()
+      const p = prompt("Choose your weapon: rock(r), paper(p) or scissors(s).")
+      let userInput = p && p.trim().toLowerCase()
+      
+      if (userInput === "r") userInput = "rock"
+      else if (userInput === "p") userInput = "paper"
+      else if (userInput === "s") userInput = "scissors"
+      
       if (!["rock", "paper", "scissors"].includes(userInput)) console.log("Invalid input. Try again.")
       else playerChoice = userInput
     }
 
     // Play round
     const round = playRound(playerChoice, getComputerChoice())
-    if (round.winner) score[round.winner]++
+    if (round.winner) score[round.winner]++ // winner is null if round is tied
     console.log(`Round ${i+1}: ${round.message}`)
   }
 
