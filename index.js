@@ -1,10 +1,10 @@
 "use strict"
 /********** DOM NODES **********/
-const roundMessage = document.querySelector('.round-message')
 const topInfoText = document.querySelector('.top-info-text')
-const selectionButtons = document.querySelectorAll('.buttons button')
 const resetButton = document.querySelector('.reset-button')
-const gameButtons = document.querySelector('.buttons')
+const selectionButtonsContainer = document.querySelector('.selection-buttons')
+const selectionButtons = document.querySelectorAll('.selection-buttons button')
+const roundMessage = document.querySelector('.round-message')
 
 /********** GAME STATE VARIABLES **********/
 const scoreToWin = 5
@@ -29,7 +29,7 @@ function endGame() {
   let winner = Object.keys(score).filter(key => score[key] === scoreToWin)[0]
   topInfoText.textContent = `Game over. ${winner.toUpperCase()} won the game!`
 
-  gameButtons.classList.add("hidden")
+  selectionButtonsContainer.classList.add("hidden")
   resetButton.classList.remove("hidden")
 }
 
@@ -40,7 +40,7 @@ function getComputerChoice() {
 
 function handleResetButton() {
   // Reset classes
-  gameButtons.classList.remove("hidden")
+  selectionButtonsContainer.classList.remove("hidden")
   resetButton.classList.add("hidden")
 
   // Reset variables
