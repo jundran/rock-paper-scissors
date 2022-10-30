@@ -1,7 +1,68 @@
 "use strict"
+/********** DOM NODES **********/
+const roundMessage = document.querySelector('.round-message')
+const topInfoText = document.querySelector('.top-info-text')
+const selectionButtons = document.querySelectorAll('.buttons button')
+const resetButton = document.querySelector('.reset-button')
+const gameButtons = document.querySelector('.buttons')
+
+/********** GAME STATE VARIABLES **********/
+const maxRounds = 5
+let roundNumber = 1
+const score = {
+  player: 0,
+  computer: 0
+}
+const scoreText = {
+  player: document.querySelector('.player-score').childNodes[1],
+  computer: document.querySelector('.computer-score').childNodes[1]
+}
+
+/********** EVENT LISTENERS **********/
+function setupEventListeners() {
+  selectionButtons.forEach(button => button.addEventListener('click', handleRound))
+  resetButton.addEventListener('click', handleResetButton)
+}
+
+/********** FUNCTIONS **********/
+function endGame() {
+  let winner = Object.entries(score).sort((a, b) => b[1] - a[1])[0][0]
+  if(score.player == score.computer) winner == null
+  topInfoText.textContent = winner ?
+    `Game over. ${winner.toUpperCase()} won the game!` :
+    `Game over. The game was a draw.`
+
+  gameButtons.classList.add("hidden")
+  resetButton.classList.remove("hidden")
+}
+
 function getComputerChoice() {
   const choices = ["rock", "paper", "scissors"]
   return choices[Math.floor(Math.random() * choices.length)]
+}
+
+function handleResetButton() {
+  // Reset classes
+  gameButtons.classList.remove("hidden")
+  resetButton.classList.add("hidden")
+
+  // Reset variables
+  Object.keys(score).forEach(key => score[key] = 0)
+  roundNumber = 1
+
+  // Reset UI
+  Object.keys(scoreText).forEach(key => scoreText[key].textContent = 0)
+  roundMessage.textContent = ""
+  topInfoText.textContent = `Round 1 of ${maxRounds}`
+}
+
+function handleRound(e) {
+  const round = playRound(e.target.className, getComputerChoice())
+  if(round.winner) scoreText[round.winner].textContent = ++score[round.winner]
+  roundMessage.textContent = round.message
+
+  if(++roundNumber > maxRounds) endGame()
+  else topInfoText.textContent = `Round ${roundNumber} of ${maxRounds}`
 }
 
 function playRound(playerChoice, computerChoice) {
@@ -33,43 +94,5 @@ function playRound(playerChoice, computerChoice) {
   return { winner, message }
 }
 
-function game() {
-  const score = {
-    player: 0,
-    computer: 0
-  }
-  
-  // Play 5 rounds
-  for (let i = 0; i < 5; i++) {
-    // Get, sanitize and validate user input
-    let playerChoice = null
-    while (!playerChoice) {
-      const p = prompt("Choose your weapon: rock(r), paper(p) or scissors(s).")
-      let userInput = p && p.trim().toLowerCase()
-      
-      if (userInput === "r") userInput = "rock"
-      else if (userInput === "p") userInput = "paper"
-      else if (userInput === "s") userInput = "scissors"
-      
-      if (!["rock", "paper", "scissors"].includes(userInput)) console.log("Invalid input. Try again.")
-      else playerChoice = userInput
-    }
-
-    // Play round
-    const round = playRound(playerChoice, getComputerChoice())
-    if (round.winner) score[round.winner]++ // winner is null if round is tied
-    console.log(`Round ${i+1}: ${round.message}`)
-  }
-
-  // Game over - print results
-  if (score.player === score.computer) {
-    console.log("Game over. It was a draw.")
-  }
-  else {
-    const winner = score.player > score.computer ? "You" : "The computer"
-    console.log(`Game over. ${winner} won the game!`)
-  }
-  console.log(`Score: [Player: ${score.player}] [Computer: ${score.computer}]`)
-}
-
-game()
+// Entry point
+setupEventListeners()
