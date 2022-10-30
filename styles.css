@@ -8,6 +8,7 @@ body {
 
 .container {
   max-width: 900px;
+  flex-grow: 1;
   padding: 16px;
   display: flex;
   flex-direction: column;
@@ -30,16 +31,11 @@ body {
 
 .main {
   padding: 100px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
+/* Targets .reset-button and .selection-buttons-container */
 .main > * {
   display: flex;
-  justify-content: center;
-  gap: 50px;
-  flex-wrap: wrap;
 }
 
 button {
@@ -55,13 +51,21 @@ button:hover {
 .reset-button {
   width: 200px;
   height: 100px;
+  margin: auto;
+  justify-content: center;
   align-items: center;
   font-weight: inherit;
   font-size: inherit;
   font-family: inherit;
 }
 
-.selection-buttons button {
+.selection-buttons-container {
+  justify-content: space-around;
+  gap: 50px;
+  flex-wrap: wrap;
+}
+
+.selection-buttons-container button {
   height: 150px;
   width: 150px;
 }
@@ -98,8 +102,13 @@ img {
     padding: 16px;
   }
 
-  .selection-buttons {
+  .reset-button {
+    margin: 50px auto;
+  }
+
+  .selection-buttons-container {
     flex-direction: column;
+    align-items: center;
   }
 
   .top-info-text {

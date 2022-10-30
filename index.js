@@ -2,8 +2,8 @@
 /********** DOM NODES **********/
 const topInfoText = document.querySelector('.top-info-text')
 const resetButton = document.querySelector('.reset-button')
-const selectionButtonsContainer = document.querySelector('.selection-buttons')
-const selectionButtons = document.querySelectorAll('.selection-buttons button')
+const selectionButtonsContainer = document.querySelector('.selection-buttons-container')
+const selectionButtons = document.querySelectorAll('.selection-buttons-container button')
 const roundMessage = document.querySelector('.round-message')
 
 /********** GAME STATE VARIABLES **********/
