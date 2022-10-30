@@ -7,7 +7,7 @@ const selectionButtons = document.querySelectorAll('.selection-buttons button')
 const roundMessage = document.querySelector('.round-message')
 
 /********** GAME STATE VARIABLES **********/
-const scoreToWin = 5
+const SCORE_TO_WIN = 5
 let roundNumber = 1
 const score = {
   player: 0,
@@ -26,7 +26,7 @@ function setupEventListeners() {
 
 /********** FUNCTIONS **********/
 function endGame() {
-  let winner = Object.keys(score).filter(key => score[key] === scoreToWin)[0]
+  let winner = Object.keys(score).filter(key => score[key] === SCORE_TO_WIN)[0]
   topInfoText.textContent = `Game over. ${winner.toUpperCase()} won the game!`
 
   selectionButtonsContainer.classList.add("hidden")
@@ -54,11 +54,12 @@ function handleResetButton() {
 }
 
 function handleRound(e) {
-  const round = playRound(e.target.className, getComputerChoice())
+  // Use this.className to get class of button that contains SVG
+  const round = playRound(this.className, getComputerChoice())
   if(round.winner) scoreText[round.winner].textContent = ++score[round.winner]
   roundMessage.textContent = round.message
 
-  if(score[round.winner] === scoreToWin) endGame()
+  if(score[round.winner] === SCORE_TO_WIN) endGame()
   else topInfoText.textContent = `Round ${++roundNumber}`
 }
 

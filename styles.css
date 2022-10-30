@@ -42,26 +42,39 @@ body {
   flex-wrap: wrap;
 }
 
-.reset-button {
-  align-items: center;
-  width: 200px;
-}
-
 button {
-  height: 110px;
-  width: 150px;
-  background-color: lightskyblue;
-  border-radius: 5px;
   border: 1px solid navy;
-
-  font-weight: inherit;
-  font-size: inherit;
-  font-family: inherit;
+  border-radius: 5px;
 }
 
 button:hover {
   cursor: pointer;
   border-color: orangered;
+}
+
+.reset-button {
+  width: 200px;
+  height: 100px;
+  align-items: center;
+  font-weight: inherit;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+.selection-buttons button {
+  height: 150px;
+  width: 150px;
+}
+
+img {
+  object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.scissors img {
+  max-width: 95%;
+  max-height: 95%;
 }
 
 .hidden {
@@ -70,6 +83,7 @@ button:hover {
 
 .round-message {
   text-align: center;
+  min-height: 100px;
 }
 
 @media(max-width: 700px) {
