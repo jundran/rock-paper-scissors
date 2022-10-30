@@ -7,7 +7,7 @@ const resetButton = document.querySelector('.reset-button')
 const gameButtons = document.querySelector('.buttons')
 
 /********** GAME STATE VARIABLES **********/
-const maxRounds = 5
+const scoreToWin = 5
 let roundNumber = 1
 const score = {
   player: 0,
@@ -26,11 +26,8 @@ function setupEventListeners() {
 
 /********** FUNCTIONS **********/
 function endGame() {
-  let winner = Object.entries(score).sort((a, b) => b[1] - a[1])[0][0]
-  if(score.player == score.computer) winner == null
-  topInfoText.textContent = winner ?
-    `Game over. ${winner.toUpperCase()} won the game!` :
-    `Game over. The game was a draw.`
+  let winner = Object.keys(score).filter(key => score[key] === scoreToWin)[0]
+  topInfoText.textContent = `Game over. ${winner.toUpperCase()} won the game!`
 
   gameButtons.classList.add("hidden")
   resetButton.classList.remove("hidden")
@@ -53,7 +50,7 @@ function handleResetButton() {
   // Reset UI
   Object.keys(scoreText).forEach(key => scoreText[key].textContent = 0)
   roundMessage.textContent = ""
-  topInfoText.textContent = `Round 1 of ${maxRounds}`
+  topInfoText.textContent = `Round 1`
 }
 
 function handleRound(e) {
@@ -61,8 +58,8 @@ function handleRound(e) {
   if(round.winner) scoreText[round.winner].textContent = ++score[round.winner]
   roundMessage.textContent = round.message
 
-  if(++roundNumber > maxRounds) endGame()
-  else topInfoText.textContent = `Round ${roundNumber} of ${maxRounds}`
+  if(score[round.winner] === scoreToWin) endGame()
+  else topInfoText.textContent = `Round ${++roundNumber}`
 }
 
 function playRound(playerChoice, computerChoice) {
