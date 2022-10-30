@@ -1,12 +1,14 @@
 body {
+  min-height: 100vh;
   margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .container {
   max-width: 900px;
-  margin: auto;
-  padding: 128px 16px;
-
+  padding: 16px;
   display: flex;
   flex-direction: column;
 
@@ -71,7 +73,7 @@ button:hover {
 }
 
 @media(max-width: 500px) {
-  .container, .main {
+  .main {
     padding: 16px;
   }
 
